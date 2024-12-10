@@ -1,0 +1,39 @@
+# Model configuration
+model.name = 'film_net'
+
+# Film Net specific configurations
+film_net.pyramid_levels = 1  # Increased pyramid levels to consume more memory
+film_net.fusion_pyramid_levels = 1  # Increased fusion pyramid levels
+film_net.specialized_levels = 1  # Increased specialized levels for more complexity
+film_net.sub_levels = 1  # Increased sub levels for more complexity
+film_net.flow_convs = [3]  # Ensure there are 12 levels (matching pyramid_levels)
+film_net.flow_filters = [128]  # Adjust the number of flow filters to match pyramid levels
+film_net.filters = 256  # Increased filters to consume more memory
+
+# Training configuration
+training.learning_rate = 0.0001
+training.learning_rate_decay_steps = 150000
+training.learning_rate_decay_rate = 0.464158
+training.learning_rate_staircase = True
+training.num_steps = 1 # Adjusted for 1 hour of training
+
+# Training dataset
+training_dataset.file = '/content/train_subset@1'
+training_dataset.batch_size = 16  # Increased batch size for more memory usage
+training_dataset.crop_size = 256  # Keep crop size as is
+
+# Evaluation datasets
+eval_datasets.files = []  # Disabled during training to save time
+eval_datasets.names = []  # Disabled during training to save time
+eval_datasets.batch_size = 32  # Match batch size for evaluation
+eval_datasets.max_examples = -1  # No limit for evaluation examples
+
+# Data augmentation for training
+data_augmentation.names = []
+
+# Loss functions
+training_losses.loss_names = ['l1']
+training_losses.loss_weights = [1.0]
+
+test_losses.loss_names = ['l1', 'psnr', 'ssim']
+test_losses.loss_weights = [1.0, 1.0, 1.0]
